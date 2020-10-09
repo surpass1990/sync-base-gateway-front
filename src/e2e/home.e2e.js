@@ -7,7 +7,7 @@ describe('Homepage', () => {
     await page.goto('http://localhost:8000', { waitUntil: 'networkidle2' });
     await page.waitForSelector('h1');
     const text = await page.evaluate(() => document.body.innerHTML);
-    expect(text).toContain('<h1>京营平台</h1>');
+    expect(text).toContain('<h1>控制台</h1>');
     await page.close();
     browser.close();
   });

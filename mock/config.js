@@ -44,10 +44,10 @@ export default {
       {
         "id": 160,
         "systemCode": "JYPT",
-        "systemName": "京营平台",
+        "systemName": "控制台",
         "token": "289a35fae5ae4b1c9c171d928ba34efc",
         "type": 2,
-        "msg": "京营平台",
+        "msg": "控制台",
         "status": 1,
         "flowStatus": 2,
         "operateUser": "zhanghao63",
