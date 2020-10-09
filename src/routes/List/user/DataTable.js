@@ -2,15 +2,15 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import { Table, Button } from 'antd';
-import emitter from "../../../../utils/events";
+import emitter from "../../../utils/events";
 
 import UpdateSystemConfigForm from './UpdateData';
-import {baseState} from "../../../../utils/commonUtils";
+import {baseState} from "../../../utils/commonUtils";
 
-@connect(({ global: {enums : { systemTypes }}, systemConfig: { table: { data, pagination } }, loading: { models: { systemConfig } } }) => ({ data, pagination, loading: systemConfig, systemTypes }))
+@connect(({ userConfig: { table: { data } } }) => ({ data }))
 export default class DataTable extends PureComponent {
 
-  state = baseState("systemConfig", "系统") || {};
+  state = baseState("userConfig", "用户") || {};
 
   handleChange = (pagination) => {
     emitter.emit(this.state.commons.emitName, pagination);
@@ -29,8 +29,7 @@ export default class DataTable extends PureComponent {
   };
 
   render() {
-    const { data, pagination, loading, systemTypes } = this.props;
-    const systemTypesMap = new Map(systemTypes.map(({ code, desc }) => [code, desc]));
+    const { data, loading } = this.props;
     const columns = [
       {
         title: '用户标识',
@@ -70,11 +69,6 @@ export default class DataTable extends PureComponent {
         ),
       },
     ];
-
-    const paginationProps = {
-      showSizeChanger: true,
-      ...pagination,
-    };
 
     return (
       <div >

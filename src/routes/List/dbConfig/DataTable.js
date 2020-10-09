@@ -2,15 +2,15 @@ import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import { Table, Button } from 'antd';
-import emitter from "../../../../utils/events";
+import emitter from "../../../utils/events";
 
 import UpdateSystemConfigForm from './UpdateData';
-import {baseState} from "../../../../utils/commonUtils";
+import {baseState} from "../../../utils/commonUtils";
 
-@connect(({ global: {enums : { systemTypes }}, systemConfig: { table: { data, pagination } }, loading: { models: { systemConfig } } }) => ({ data, pagination, loading: systemConfig, systemTypes }))
+@connect(({ dbConfig: { table: { data, pagination } } }) => ({ data, pagination }))
 export default class DataTable extends PureComponent {
 
-  state = baseState("systemConfig", "系统") || {};
+  state = baseState("dbConfig", "WDC配置") || {};
 
   handleChange = (pagination) => {
     emitter.emit(this.state.commons.emitName, pagination);
@@ -29,29 +29,60 @@ export default class DataTable extends PureComponent {
   };
 
   render() {
-    const { data, pagination, loading, systemTypes } = this.props;
-    const systemTypesMap = new Map(systemTypes.map(({ code, desc }) => [code, desc]));
+    const { data, loading } = this.props;
     const columns = [
       {
-        title: '用户标识',
+        title: '标识',
+        dataIndex: 'cid',
+        key: 'cid',
+      },
+      {
+        title: '测点',
+        dataIndex: 'tagId',
+        key: 'tagId',
+      },
+      {
+        title: '测点集合',
+        dataIndex: 'tagIds',
+        key: 'tagIds',
+      },
+      {
+        title: '测点名称',
+        dataIndex: 'tagName',
+        key: 'tagName',
+        render: val => val === '1' ? '是' : '否',
+      },
+      {
+        title: '开始时间',
+        dataIndex: 'beginTime',
+        key: 'beginTime',
+        render: val => val === '1' ? '是' : '否',
+      },
+      {
+        title: '结束时间',
+        dataIndex: 'endTime',
+        key: 'endTime',
+        render: val => val === '1' ? '是' : '否',
+      },
+      {
+        title: '时间间隔',
+        dataIndex: 'gapTime',
+        key: 'gapTime',
+      },
+      {
+        title: '步长',
+        dataIndex: 'step',
+        key: 'step',
+      },
+      {
+        title: '模式',
+        dataIndex: 'model',
+        key: 'model',
+      },
+      {
+        title: '拥有者',
         dataIndex: 'userName',
         key: 'userName',
-      },
-      {
-        title: '邮箱',
-        dataIndex: 'email',
-        key: 'email',
-      },
-      {
-        title: '联系方式',
-        dataIndex: 'tel',
-        key: 'tel',
-      },
-      {
-        title: '管理员',
-        dataIndex: 'admin',
-        key: 'admin',
-        render: val => val === '1' ? '是' : '否',
       },
       {
         title: '创建时间',
@@ -70,11 +101,6 @@ export default class DataTable extends PureComponent {
         ),
       },
     ];
-
-    const paginationProps = {
-      showSizeChanger: true,
-      ...pagination,
-    };
 
     return (
       <div >

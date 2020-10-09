@@ -2,22 +2,20 @@ import React, {PureComponent} from 'react';
 import {connect} from 'dva';
 import {Button, Col, Form, Input, Row} from 'antd';
 import FormItem from 'antd/es/form/FormItem';
-import emitter from "../../../../utils/events";
-import {baseState} from "../../../../utils/commonUtils";
+import emitter from "../../../utils/events";
+import {baseState} from "../../../utils/commonUtils";
 
-@connect(({ systemConfig: { systems } }) => ({ systems }))
+@connect()
 @Form.create()
 export default class SearchForm extends PureComponent {
 
-  state = baseState("systemConfig", "系统") || {};
+  state = baseState("dbConfig", "WDC配置") || {};
 
   componentDidMount() {
-    const { dispatch } = this.props;
 
     emitter.on(this.state.commons.emitName, (pagination) => {
       this._handleSubmit(pagination);
     });
-
     this._handleSubmit();
   }
 
@@ -52,8 +50,7 @@ export default class SearchForm extends PureComponent {
   };
 
   render() {
-    const { form: { getFieldDecorator }, systems, size} = this.props;
-    const systemOptions = systems.map(({systemCode: b, systemName: n}) => ({code:b, desc:n}));
+    const { form: { getFieldDecorator }, size} = this.props;
     return (
       <Form onSubmit={this.handleSubmit} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>

@@ -75,14 +75,14 @@ export const getRouterData = app => {
     '/home': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BlankLayout')),
     },
-    '/config/systemConfig': {
-      component: dynamicWrapper(app, ['config/systemConfig'], () => import('../routes/List/config/system/List')),
-      authority: ['admin', '/config/systemConfig'],
+    '/config/user': {
+      component: dynamicWrapper(app, ['config/userConfig'], () => import('../routes/List/user/List')),
+      authority: ['admin', '/config/user'],
     },
 
-    '/userManage/syncRecord': {
-      component: dynamicWrapper(app, ['userManage/syncRecord'], () => import('../routes/List/userManage/sync/List')),
-      authority: ['admin', '/userManage/syncRecord'],
+    '/config/dbConfig': {
+      component: dynamicWrapper(app, ['config/dbConfig'], () => import('../routes/List/dbConfig/List')),
+      authority: ['admin', '/config/dbConfig'],
     },
 
     '/exception/403': {

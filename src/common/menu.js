@@ -13,22 +13,14 @@ const menuData = [
     authority: ['admin', '/config'],
     children: [
       {
-        name: '数据源管理',
-        path: 'systemConfig',
-        authority: ['admin', '/config/systemConfig'],
+        name: '用户管理',
+        path: 'user',
+        authority: ['admin', '/config/user'],
       },
-    ],
-  },
-  {
-    name: '用户管理',
-    path: 'userManage',
-    icon: 'setting',
-    authority: ['admin', '/userManage'],
-    children: [
       {
-        name: '用户列表',
-        path: 'syncRecord',
-        authority: ['admin', '/userManage/syncRecord'],
+        name: '测试管理',
+        path: 'dbConfig',
+        authority: ['admin', '/config/dbConfig'],
       },
     ],
   },

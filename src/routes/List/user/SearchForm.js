@@ -2,19 +2,22 @@ import React, {PureComponent} from 'react';
 import {connect} from 'dva';
 import {Button, Col, Form, Input, Row} from 'antd';
 import FormItem from 'antd/es/form/FormItem';
-import {baseState, initSelect} from '../../../../utils/commonUtils';
-import emitter from "../../../../utils/events";
+import emitter from "../../../utils/events";
+import {baseState} from "../../../utils/commonUtils";
 
-@connect(({ global: { enums, enums: {userTypes}, dictEnums } }) => ({enums, userTypes, dictEnums }))
+@connect(({ userConfig: { systems } }) => ({ systems }))
 @Form.create()
 export default class SearchForm extends PureComponent {
 
-  state = baseState("syncRecord", "同步用户信息");
+  state = baseState("userConfig", "用户") || {};
 
   componentDidMount() {
+    const { dispatch } = this.props;
+
     emitter.on(this.state.commons.emitName, (pagination) => {
       this._handleSubmit(pagination);
     });
+
     this._handleSubmit();
   }
 
@@ -49,31 +52,21 @@ export default class SearchForm extends PureComponent {
   };
 
   render() {
-    const { form: { getFieldDecorator }, dictEnums } = this.props;
+    const { form: { getFieldDecorator }, systems, size} = this.props;
+    const systemOptions = systems.map(({systemCode: b, systemName: n}) => ({code:b, desc:n}));
     return (
       <Form onSubmit={this.handleSubmit} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
-          <Col md={7} sm={24}>
-            <FormItem label="用户ID">
-              {getFieldDecorator('userId')(<Input />)}
-            </FormItem>
-          </Col>
-          <Col md={7} sm={24}>
-            <FormItem label="用户编码">
-              {getFieldDecorator('userCode')(<Input />)}
-            </FormItem>
-          </Col>
-          <Col md={7} sm={24}>
-            <FormItem label="操作用户">
-              {getFieldDecorator('operateUser')(<Input />)}
+          <Col md={8} sm={24}>
+            <FormItem label="用户标识">
+              {getFieldDecorator('userName')(<Input />)}
             </FormItem>
           </Col>
         </Row>
-
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>
-            <Button type="primary" htmlType="submit" icon="search" size="small">查询</Button>
-            <Button style={{ marginLeft: 8 }} onClick={this.handleReset} size="small">重置</Button>
+            <Button type="primary" htmlType="submit" icon="search" size={size ? `${size}` : 'default'}>查询</Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset} size={size ? `${size}` : 'default'}>重置</Button>
           </span>
         </div>
       </Form>
