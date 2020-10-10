@@ -690,3 +690,27 @@ export function getConfirmBtn(title, func, btnMsg) {
     </Popconfirm>
   );
 }
+
+
+export function doClose(props, flag, updateFlag=false){
+  const { dispatch } = props;
+    dispatch({
+      type: "middleModel/display",
+      payload: flag,
+      isUpdate: updateFlag,
+    });
+}
+
+export function bindOldRecord(props, record){
+  const { dispatch } = props;
+  dispatch({
+    type: "middleModel/bindOldRecord",
+    payload: record,
+  });
+}
+
+
+export function doPreUpdate(props, record){
+  doClose(props, true, true);
+  bindOldRecord(props, record);
+}

@@ -3,9 +3,7 @@ import { connect } from 'dva';
 import moment from 'moment';
 import { Table, Button } from 'antd';
 import emitter from "../../../utils/events";
-
-import UpdateSystemConfigForm from './UpdateData';
-import {baseState} from "../../../utils/commonUtils";
+import {baseState, doPreUpdate} from "../../../utils/commonUtils";
 
 @connect(({ dbConfig: { table: { data, pagination } } }) => ({ data, pagination }))
 export default class DataTable extends PureComponent {
@@ -16,17 +14,6 @@ export default class DataTable extends PureComponent {
     emitter.emit(this.state.commons.emitName, pagination);
   };
 
-  handleClick = (record) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: this.state.baseUrl.displayUpdate,
-      payload: true,
-    });
-    dispatch({
-      type: this.state.baseUrl.bindOldRecord,
-      payload: record,
-    });
-  };
 
   render() {
     const { data, loading } = this.props;
@@ -96,7 +83,7 @@ export default class DataTable extends PureComponent {
         key: 'action',
         render: (_, record) => (
           <div>
-            <Button type="primary" ghost size="small" icon="edit" onClick={() => this.handleClick(record)}>编辑</Button>
+            <Button type="primary" ghost size="small" icon="edit" onClick={() => doPreUpdate(this.props, record)}>编辑</Button>
           </div>
         ),
       },
@@ -106,14 +93,13 @@ export default class DataTable extends PureComponent {
       <div >
         <Table
           loading={loading}
-          rowKey="id"
+          rowKey="cid"
           dataSource={data}
           columns={columns}
           pagination={false}
           onChange={this.handleChange}
           size="small"
         />
-        <UpdateSystemConfigForm />
       </div>
     );
   }

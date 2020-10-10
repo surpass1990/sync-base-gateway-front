@@ -76,12 +76,12 @@ export const getRouterData = app => {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BlankLayout')),
     },
     '/config/user': {
-      component: dynamicWrapper(app, ['config/userConfig'], () => import('../routes/List/user/List')),
+      component: dynamicWrapper(app, ['config/userConfig', 'middleModel'], () => import('../routes/List/user/List')),
       authority: ['admin', '/config/user'],
     },
 
     '/config/dbConfig': {
-      component: dynamicWrapper(app, ['config/dbConfig'], () => import('../routes/List/dbConfig/List')),
+      component: dynamicWrapper(app, ['config/dbConfig', 'middleModel'], () => import('../routes/List/dbConfig/List')),
       authority: ['admin', '/config/dbConfig'],
     },
 

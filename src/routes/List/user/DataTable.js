@@ -3,9 +3,7 @@ import { connect } from 'dva';
 import moment from 'moment';
 import { Table, Button } from 'antd';
 import emitter from "../../../utils/events";
-
-import UpdateSystemConfigForm from './UpdateData';
-import {baseState} from "../../../utils/commonUtils";
+import {baseState, bindOldRecord, doClose} from "../../../utils/commonUtils";
 
 @connect(({ userConfig: { table: { data } } }) => ({ data }))
 export default class DataTable extends PureComponent {
@@ -17,15 +15,8 @@ export default class DataTable extends PureComponent {
   };
 
   handleClick = (record) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: this.state.baseUrl.displayUpdate,
-      payload: true,
-    });
-    dispatch({
-      type: this.state.baseUrl.bindOldRecord,
-      payload: record,
-    });
+    doClose(this.props, true, true);
+    bindOldRecord(this.props, record);
   };
 
   render() {
@@ -74,14 +65,13 @@ export default class DataTable extends PureComponent {
       <div >
         <Table
           loading={loading}
-          rowKey="id"
+          rowKey="userName"
           dataSource={data}
           columns={columns}
           pagination={false}
           onChange={this.handleChange}
           size="small"
         />
-        <UpdateSystemConfigForm />
       </div>
     );
   }

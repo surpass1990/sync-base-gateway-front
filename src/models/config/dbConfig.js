@@ -38,7 +38,7 @@ export default {
 
     * add({ payload, callback }, { call }) {
       const response = yield call(add, payload);
-      if (response.code === 0) {
+      if (response.code === 0 || response.code === 200) {
         message.success(response.message);
         if (callback) callback();
       } else {
@@ -48,7 +48,7 @@ export default {
 
     * update({ payload, callback }, { call }) {
       const response = yield call(update, payload);
-      if (response.code === 0) {
+      if (response.code === 0 || response.code === 200) {
         message.success(response.message);
         if (callback) callback();
       } else {
