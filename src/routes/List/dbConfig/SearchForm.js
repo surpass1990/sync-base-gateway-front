@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'dva';
-import {Button, Col, Form, Input, Row} from 'antd';
+import {Button, Col, Form, Input, Row, Select} from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import emitter from "../../../utils/events";
 import {baseState} from "../../../utils/commonUtils";
@@ -51,12 +51,45 @@ export default class SearchForm extends PureComponent {
 
   render() {
     const { form: { getFieldDecorator }, size} = this.props;
+    const { Option } = Select;
     return (
       <Form onSubmit={this.handleSubmit} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="用户标识">
+            <FormItem label="配置标识">
+              {getFieldDecorator('cid')(<Input />)}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="测点名称">
+              {getFieldDecorator('tagName')(<Input />)}
+            </FormItem>
+          </Col>   
+          <Col md={8} sm={24}>
+            <FormItem label="类型">
+              {getFieldDecorator('type', )(
+                <Select placeholder="请选择数据源类型" >
+                  <Option value="1">实时数据(测点标识)</Option>
+                  <Option value="2">实时数据(测点名称)</Option>
+                  <Option value="3">历史数据(测点名称)</Option>
+                  <Option value="4">宽表数据</Option>
+                  <Option value="5">增量数据</Option>
+                  <Option value="6">增量数据(tableau)</Option>
+                  <Option value="7">增量数据(js)</Option>
+                </Select>
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+        <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
+          <Col md={8} sm={24}>
+            <FormItem label="操作人">
               {getFieldDecorator('userName')(<Input />)}
+            </FormItem>
+          </Col>
+          <Col md={8} sm={24}>
+            <FormItem label="创建人">
+              {getFieldDecorator('operateUser')(<Input />)}
             </FormItem>
           </Col>
         </Row>

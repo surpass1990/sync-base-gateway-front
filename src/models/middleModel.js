@@ -25,5 +25,10 @@ export default {
       newState.preUpdate = payload;
       return newState;
     },
+
+    reset(){
+      const newState = { };
+      return newState;
+    },
   },
 };

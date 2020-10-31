@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import { Modal, Form, Input, Select, DatePicker } from 'antd';
+import moment from 'moment';
 import FormItem from 'antd/es/form/FormItem';
 import emitter from "../../../utils/events";
 import { baseState, doClose } from '../../../utils/commonUtils';
@@ -107,12 +108,9 @@ export default class AddOrUpdateModal extends PureComponent {
         width="60%"
       >
         <Form style={{ marginTop: 8 }}>
-          <FormItem {...formItemLayout} label="WDC标识">
+          <FormItem {...formItemLayout} label="配置标识">
             {
-              getFieldDecorator('cid', {
-                initialValue: record.cid,
-                rules: [{ required: true, message: 'WDC标识不能为空' }],
-              })(<Input placeholder="请输入WDC标识" disabled={isUpdate} />)}
+              getFieldDecorator('cid')(<Input placeholder="配置标识生成" disabled />)}
           </FormItem>
 
           <FormItem {...formItemLayout} label="数据类型">
@@ -135,7 +133,7 @@ export default class AddOrUpdateModal extends PureComponent {
             {
               getFieldDecorator('tagIds', {
                 initialValue: record.tagIds,
-              })(<Input placeholder="请输入测点标识, 格式例如:0-10,2" />)}
+              })(<Input placeholder="请输入测点标识, 格式例如:0-10,2, 仅【实时数据(测点标识)】时才有效" />)}
           </FormItem>
 
           <FormItem {...formItemLayout} label="测点名称">
@@ -157,20 +155,19 @@ export default class AddOrUpdateModal extends PureComponent {
             {
               getFieldDecorator('gapTime', {
                 initialValue: record.gapTime,
-                rules: [{ required: true, message: '周期时间' }],
               })(<Input placeholder="请输入周期时间, 以D或H或M结尾, 不区分大小写" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="时间范围">
             {
-              getFieldDecorator('startTime', {
-                initialValue: record.startTime,
+              getFieldDecorator('beginTime', {
+                initialValue: record.beginTime ? moment(record.beginTime) : null,
               })(
                 <DatePicker
-                  disabledDate={this.disabledStartDate}
+                  // disabledDate={this.disabledStartDate}
                   showTime
                   format="YYYY-MM-DD HH:mm:ss"
                   value={this.state.startValue}
-                  placeholder="Start"
+                  placeholder="开始时间"
                   onChange={this.onStartChange}
                   onOpenChange={this.handleStartOpenChange}
                   style={{ minWidth: '100%' }}
@@ -182,14 +179,14 @@ export default class AddOrUpdateModal extends PureComponent {
           <FormItem {...formItemLayout} label="时间范围">
             {
               getFieldDecorator('endTime', {
-                initialValue: record.endTime,
+                initialValue: record.endTime ? moment(record.endTime) : null,
               })(
                 <DatePicker
                   disabledDate={this.disabledEndDate}
                   showTime
                   format="YYYY-MM-DD HH:mm:ss"
                   value={this.state.endValue}
-                  placeholder="End"
+                  placeholder="结束时间"
                   onChange={this.onEndChange}
                   open={this.state.endOpen}
                   onOpenChange={this.handleEndOpenChange}

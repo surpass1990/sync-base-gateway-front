@@ -714,3 +714,11 @@ export function doPreUpdate(props, record){
   doClose(props, true, true);
   bindOldRecord(props, record);
 }
+
+
+export function reset(props){
+  const { dispatch } = props;
+  dispatch({
+    type: "middleModel/reset",
+  });
+}

@@ -17,6 +17,7 @@ import Authorized, {reloadAuthorized} from '../utils/Authorized';
 import {getMenuData} from '../common/menu';
 import logo from '../assets/logo-joy.png';
 import {setAuthority} from '../utils/authority';
+import { reset } from '../utils/commonUtils';
 
 const {Content, Header, Footer} = Layout;
 const {AuthorizedRoute, check} = Authorized;
@@ -142,6 +143,9 @@ class BasicLayout extends React.PureComponent {
   }
 
   getBashRedirect = () => {
+    // 重置中间变量区域
+    reset(this.props);
+
     // According to the url parameter to redirect
     // 这里是重定向的,重定向到 url 的 redirect 参数所示地址
     const urlParams = new URL(window.location.href);
@@ -175,6 +179,9 @@ class BasicLayout extends React.PureComponent {
   };
 
   handleMenuClick = ({key}) => {
+    console.log("我已经点击了事件");
+
+
     if (key === 'triggerError') {
       this.props.dispatch(routerRedux.push('/exception/trigger'));
       return;
