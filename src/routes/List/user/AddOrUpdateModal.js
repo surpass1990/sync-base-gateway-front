@@ -13,6 +13,7 @@ export default class AddOrUpdateModal extends PureComponent {
     ...baseState("userConfig", "用户"),
     initData: {
       admin: 0,
+      status: 1,
     },
   };
 
@@ -38,7 +39,7 @@ export default class AddOrUpdateModal extends PureComponent {
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         dispatch({
-          type: this.state.baseUrl.add,
+          type: this.state.baseUrl.update,
           payload: values,
           callback: () => {
             doClose(this.props, false);
@@ -72,12 +73,12 @@ export default class AddOrUpdateModal extends PureComponent {
         onCancel={() => doClose(this.props, false)}
       >
         <Form style={{ marginTop: 8 }}>
-          <FormItem {...formItemLayout} label="用户标识">
+          <FormItem {...formItemLayout} label="登录ID">
             {
               getFieldDecorator('userName', {
                 initialValue: record.userName,
-                rules: [{ required: true, message: '用户标识不能为空' }],
-              })(<Input placeholder="请输入用户标识" disabled={isUpdate} />)}
+                rules: [{ required: true, message: '登录ID不能为空' }],
+              })(<Input placeholder="请输入登录ID" disabled={isUpdate} />)}
           </FormItem>
 
           <FormItem {...formItemLayout} label="邮箱">
@@ -93,12 +94,23 @@ export default class AddOrUpdateModal extends PureComponent {
           </FormItem>
           <FormItem {...formItemLayout} label="管理员">
             {getFieldDecorator('admin', {
-              initialValue: record.admin,
+              initialValue: String(record.admin),
               rules: [{ required: true, message: '请选择' }],
             })(
               <Select placeholder="请选择" >
                 <Option value={String(0)}>否</Option>
                 <Option value={String(1)}>是</Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="状态">
+            {getFieldDecorator('status', {
+              initialValue: String(record.status),
+              rules: [{ required: true, message: '请选择' }],
+            })(
+              <Select placeholder="请选择" >
+                <Option value={String(1)}>启用</Option>
+                <Option value={String(0)}>禁用</Option>
               </Select>
             )}
           </FormItem>

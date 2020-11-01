@@ -27,7 +27,7 @@ const links = [
 
 const copyright = (
   <Fragment>
-    Copyright <Icon type="copyright" /> 2020 XXXXXXXXXX
+    Copyright <Icon type="copyright" /> 2020 光环云
   </Fragment>
 );
 
@@ -50,8 +50,8 @@ class UserLayout extends React.PureComponent {
             <div className={styles.top}>
               <div className={styles.header}>
                 <Link to="/">
-                  <img alt="logo" className={styles.logo} src={logo} />
-                  <span className={styles.title}>核心台账</span>
+                  {/* <img alt="logo" className={styles.logo} src={logo} /> */}
+                  <span className={styles.title}>控制台</span>
                 </Link>
               </div>
               <div className={styles.desc}>&nbsp;</div>

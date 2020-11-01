@@ -6,24 +6,24 @@ const menuData = [
     icon: 'home',
     path: 'home',
   },
+  
+  {
+    name: '用户管理',
+    path: '/config/user',
+    icon: 'setting',
+    authority: ['admin', '/config/user'],
+  },
   {
     name: '数据源管理',
-    path: 'config',
+    path: '/config/dbConfig',
     icon: 'setting',
-    authority: ['admin', '/config'],
-    children: [
-      {
-        name: '用户管理',
-        path: 'user',
-        authority: ['admin', '/config/user'],
-      },
-      {
-        name: '测试管理',
-        path: 'dbConfig',
-        authority: ['admin', '/config/dbConfig'],
-      },
-    ],
+    authority: ['admin', '/config/dbConfig'],
   },
+  // {
+  //   name: '',
+  //   path: '/user/login',
+  //   authority: ['admin', '/user/login'],
+  // },
 ];
 
 function formatter(data, parentPath = '/', parentAuthority) {

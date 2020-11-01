@@ -1,7 +1,7 @@
 import request from '../../utils/request';
 
 /**
- * 分页查询系统配置
+ * 分页查询WDC数据源配置
  */
 export async function list(params) {
   return request('/admin/config/wdcList', {
@@ -11,7 +11,7 @@ export async function list(params) {
 }
 
 /**
- * 添加系统配置
+ * 添加WDC数据源配置
  */
 export async function add(params) {
   return request('/admin/config/add', {
@@ -21,7 +21,7 @@ export async function add(params) {
 }
 
 /**
- * 修改系统配置
+ * 修改WDC数据源配置
  */
 export async function update(params) {
   return request('/admin/config/update', {
@@ -29,3 +29,14 @@ export async function update(params) {
     body: { ...params },
   });
 }
+
+/**
+ * 删除WDC数据源配置
+ */
+export async function del(params) {
+  return request('/admin/config/del', {
+    method: 'POST',
+    body: { ...params },
+  });
+}
+

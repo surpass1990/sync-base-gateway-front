@@ -99,9 +99,13 @@ export const getRouterData = app => {
         import('../routes/Exception/triggerException')
       ),
     },
+    '/user/login': {
+      component: dynamicWrapper(app, [], () => import('../routes/User/Login')),
+    },
     '/user': {
       component: dynamicWrapper(app, [], () => import('../layouts/UserLayout')),
     },
+    
   };
 
 

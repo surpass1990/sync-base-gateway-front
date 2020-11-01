@@ -1,5 +1,5 @@
 /* eslint-disable import/first,linebreak-style */
-import { list, add, update } from '../../services/config/dbConfigService';
+import { list, add, update, del } from '../../services/config/dbConfigService';
 import { message } from 'antd';
 
 /**
@@ -48,6 +48,17 @@ export default {
 
     * update({ payload, callback }, { call }) {
       const response = yield call(update, payload);
+      if (response.code === 0 || response.code === 200) {
+        message.success(response.message);
+        if (callback) callback();
+      } else {
+        message.error(response.message);
+      }
+    },
+
+    * del({ payload, callback }, { call }) {
+      const response = yield call(del, payload);
+      console.log(response);
       if (response.code === 0 || response.code === 200) {
         message.success(response.message);
         if (callback) callback();

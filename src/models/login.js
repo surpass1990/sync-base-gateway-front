@@ -18,11 +18,13 @@ export default {
         payload: response,
       });
       // Login successfully
-      if (response.status === 'ok') {
+      if (String(response.code) === '200') {
+        console.log("登录成功");
         reloadAuthorized();
         yield put(routerRedux.push('/'));
       }
     },
+    
     *logout(_, { put, select }) {
       try {
         // get location pathname
@@ -50,7 +52,8 @@ export default {
       setAuthority(payload.currentAuthority);
       return {
         ...state,
-        status: payload.status,
+        status: payload.code,
+        msg: payload.message,
         type: payload.type,
       };
     },

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm, Tooltip } from 'antd';
 import emitter from "../../../utils/events";
 import {baseState, doPreUpdate} from "../../../utils/commonUtils";
 
@@ -61,6 +61,19 @@ export default class DataTable extends PureComponent {
     return '-';
   }
 
+  doDel = (cid) =>{
+    console.log("执行删除操作", cid);
+    const { dispatch } = this.props;
+    dispatch({
+      type: "dbConfig/del",
+      payload: {cid: cid},
+      callback: () => {
+        emitter.emit(this.state.commons.emitName);
+      },
+    });
+    
+  }
+
   render() {
     const { data, loading } = this.props;
     const columns = [
@@ -68,7 +81,7 @@ export default class DataTable extends PureComponent {
         title: '配置标识',
         dataIndex: 'cid',
         key: 'cid',
-        width: 100,
+        width: 150,
         fixed: 'left',
       },
       {
@@ -78,6 +91,25 @@ export default class DataTable extends PureComponent {
         width: 150,
         render: val => this.parseType(val),
         fixed: 'left',
+      },
+      {
+        title: '请求地址',
+        dataIndex: 'reqUrl',
+        key: 'reqUrl',
+        width: 200,
+        fixed: 'left',
+        onCell: () => {
+          return {
+            style: {
+              maxWidth: 150,
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow:'ellipsis',
+              cursor:'pointer'
+            }
+          }
+        },
+        render: (text) => <Tooltip placement="topLeft" title={text}>{text}</Tooltip>
       },
       {
         title: '测点标识',
@@ -90,6 +122,18 @@ export default class DataTable extends PureComponent {
         dataIndex: 'tagName',
         key: 'tagName',
         width: 200,
+        onCell: () => {
+          return {
+            style: {
+              maxWidth: 200,
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow:'ellipsis',
+              cursor:'pointer'
+            }
+          }
+        },
+        render: (text) => <Tooltip placement="topLeft" title={text}>{text}</Tooltip>
       },
       {
         title: '开始时间',
@@ -167,7 +211,15 @@ export default class DataTable extends PureComponent {
           <div>
             <Button type="primary" ghost size="small" onClick={() => doPreUpdate(this.props, record)}>编辑</Button>
             &nbsp;
-            <Button type="primary" ghost size="small" onClick={() => doPreUpdate(this.props, record)}>删除</Button>
+            <Popconfirm
+              title={`确定删除[${record.cid}]配置?`}
+              onConfirm={() => this.doDel(record.cid)}
+              okText="是"
+              cancelText="否"
+            >
+              <Button type="primary" ghost size="small">删除</Button>
+            </Popconfirm>
+            
           </div>
         ),
       },
@@ -184,6 +236,7 @@ export default class DataTable extends PureComponent {
           onChange={this.handleChange}
           size="small"
           scroll={{ x: 2100 }}
+          // rowClassName={(record, index) => index % 2 === 0 ? red : blue}
         />
       </div>
     );

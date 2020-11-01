@@ -21,7 +21,6 @@ export default {
       "/userManage/userLoginRel",
       "/product/productConfig",
       "/config/systemConfig",
-      "/operation/jdjm",
       "/product/clientProductConfig",
       "/config/systemAuthConfig",
       "/userManage/userRealAuth",

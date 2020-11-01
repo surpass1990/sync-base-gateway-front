@@ -722,3 +722,16 @@ export function reset(props){
     type: "middleModel/reset",
   });
 }
+
+
+export function doAdd(props, flag, updateFlag=false){
+  const { dispatch } = props;
+  dispatch({
+    type: "middleModel/reset",
+  });
+  dispatch({
+    type: "middleModel/display",
+    payload: flag,
+    isUpdate: updateFlag,
+  });
+}

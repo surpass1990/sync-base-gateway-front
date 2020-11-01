@@ -56,7 +56,7 @@ export default class SearchForm extends PureComponent {
       <Form onSubmit={this.handleSubmit} layout="inline">
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="用户标识">
+            <FormItem label="登录ID">
               {getFieldDecorator('userName')(<Input />)}
             </FormItem>
           </Col>

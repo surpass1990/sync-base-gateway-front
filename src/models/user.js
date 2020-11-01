@@ -1,4 +1,4 @@
-import { query as queryUsers, queryCurrent } from '../services/user';
+import { query as queryUsers, queryCurrent, logout } from '../services/user';
 
 export default {
   namespace: 'user',
@@ -24,9 +24,18 @@ export default {
         payload: response,
       });
     },
+
+    *logout({ callback }, { call, put }) {
+      const response = yield call(logout);
+      yield put({
+        type: 'reset',
+        payload: response,
+      });
+    },
   },
 
   reducers: {
+
     save(state, action) {
       return {
         ...state,
@@ -39,6 +48,11 @@ export default {
         currentUser: action.payload,
       };
     },
+
+    reset(state, action) {
+      return {};
+    },
+
     changeNotifyCount(state, action) {
       return {
         ...state,

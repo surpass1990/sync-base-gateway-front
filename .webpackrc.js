@@ -25,7 +25,6 @@ export default {
     proxy: {
         "/admin": {
             "target": "http://127.0.0.1:9999/",
-            // "target": "http://ecc.test.jd.com:8125/",
             "changeOrigin": true,
             "pathRewrite": { "^/admin": "/admin" }
         }

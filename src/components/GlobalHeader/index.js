@@ -28,11 +28,15 @@ export default class GlobalHeader extends PureComponent {
       logo,
       onMenuClick,
     } = this.props;
+
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Divider />
         <Menu.Item key="logout">
           <Icon type="logout" />退出登录
+        </Menu.Item>
+        <Menu.Item key="chgPwd">
+          <Icon type="logout" />更新密码
         </Menu.Item>
       </Menu>
     );

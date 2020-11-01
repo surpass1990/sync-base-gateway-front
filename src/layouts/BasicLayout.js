@@ -110,12 +110,20 @@ class BasicLayout extends React.PureComponent {
       });
     });
     const {dispatch} = this.props;
+
     dispatch({
       type: 'user/fetchCurrent',
       callback: (response) => {
-        if (response && response.currentAuthority) {
-          setAuthority(response.currentAuthority);
-          reloadAuthorized();
+        console.log("查询当前用户的结果", response);
+        const {isLogin} = response;
+        if(String(isLogin) !== "1"){
+          // window.location.href = '/user/login';
+          this.props.dispatch(routerRedux.push('/user/login'));
+        }else {
+          if (response && response.currentAuthority) {
+            setAuthority(response.currentAuthority);
+            reloadAuthorized();
+          }
         }
       },
     });
@@ -179,20 +187,21 @@ class BasicLayout extends React.PureComponent {
   };
 
   handleMenuClick = ({key}) => {
-    console.log("我已经点击了事件");
-
-
     if (key === 'triggerError') {
       this.props.dispatch(routerRedux.push('/exception/trigger'));
       return;
     }
     if (key === 'logout') {
+      const {dispatch, currentUser} = this.props;
+      dispatch({
+        type: 'user/logout',
+      });
+      // window.location.href = '/user/login';
+      this.props.dispatch(routerRedux.push('/user/login'));
+    }
+    // 更新密码
+    if (key === 'chgPwd') {
       const {currentUser} = this.props;
-      if (currentUser.currentEnv === 'product' || currentUser.currentEnv === 'prd') {
-        window.location.href = `http://ssa.jd.com/sso/logout?ReturnUrl=${window.location.host}`;
-      } else {
-        window.location.href = `http://test.ssa.jd.com/sso/logout?ReturnUrl=${window.location.host}`;
-      }
     }
   };
 
@@ -211,6 +220,10 @@ class BasicLayout extends React.PureComponent {
       match,
       location,
     } = this.props;
+
+    console.log("当前用户", currentUser);
+
+
     const bashRedirect = this.getBashRedirect();
     const layout = (
       <Layout>
@@ -237,7 +250,6 @@ class BasicLayout extends React.PureComponent {
               logo={logo}
               currentUser={currentUser}
               collapsed={collapsed}
-              isMobile={this.state.isMobile}
               onCollapse={this.handleMenuCollapse}
               onMenuClick={this.handleMenuClick}
             />
@@ -265,7 +277,7 @@ class BasicLayout extends React.PureComponent {
             <GlobalFooter
               copyright={
                 <Fragment>
-                  Copyright <Icon type="copyright" /> 2020 核心组件
+                  Copyright <Icon type="copyright" /> 2020 光环云
                 </Fragment>
               }
             />

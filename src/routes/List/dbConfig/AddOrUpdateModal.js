@@ -23,55 +23,12 @@ export default class AddOrUpdateModal extends PureComponent {
     endOpen: false,
   };
 
-
-  
-
-  onChange = (field, value) => {
-    this.setState({
-      [field]: value,
-    });
-  };
-
-  onStartChange = value => {
-    this.onChange('startValue', value);
-  };
-
-  onEndChange = value => {
-    this.onChange('endValue', value);
-  };
-
-  handleStartOpenChange = open => {
-    if (!open) {
-      this.setState({ endOpen: true });
-    }
-  };
-
-  handleEndOpenChange = open => {
-    this.setState({ endOpen: open });
-  };
-
-  disabledStartDate = startValue => {
-    const { endValue } = this.state;
-    if (!startValue || !endValue) {
-      return false;
-    }
-    return startValue.valueOf() > endValue.valueOf();
-  };
-
-  disabledEndDate = endValue => {
-    const { startValue } = this.state;
-    if (!endValue || !startValue) {
-      return false;
-    }
-    return endValue.valueOf() <= startValue.valueOf();
-  };
-
   addBtn = () => {
     const { form: { validateFieldsAndScroll }, dispatch } = this.props;
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         dispatch({
-          type: this.state.baseUrl.add,
+          type: values.cid ? this.state.baseUrl.update : this.state.baseUrl.add,
           payload: values,
           callback: () => {
             doClose(this.props, false, false);
@@ -110,7 +67,9 @@ export default class AddOrUpdateModal extends PureComponent {
         <Form style={{ marginTop: 8 }}>
           <FormItem {...formItemLayout} label="配置标识">
             {
-              getFieldDecorator('cid')(<Input placeholder="配置标识生成" disabled />)}
+              getFieldDecorator('cid', {
+                initialValue: record.cid,
+              })(<Input placeholder="配置标识生成" disabled />)}
           </FormItem>
 
           <FormItem {...formItemLayout} label="数据类型">
@@ -163,13 +122,9 @@ export default class AddOrUpdateModal extends PureComponent {
                 initialValue: record.beginTime ? moment(record.beginTime) : null,
               })(
                 <DatePicker
-                  // disabledDate={this.disabledStartDate}
                   showTime
                   format="YYYY-MM-DD HH:mm:ss"
-                  value={this.state.startValue}
                   placeholder="开始时间"
-                  onChange={this.onStartChange}
-                  onOpenChange={this.handleStartOpenChange}
                   style={{ minWidth: '100%' }}
                 />
               )
@@ -182,14 +137,9 @@ export default class AddOrUpdateModal extends PureComponent {
                 initialValue: record.endTime ? moment(record.endTime) : null,
               })(
                 <DatePicker
-                  disabledDate={this.disabledEndDate}
                   showTime
                   format="YYYY-MM-DD HH:mm:ss"
-                  value={this.state.endValue}
                   placeholder="结束时间"
-                  onChange={this.onEndChange}
-                  open={this.state.endOpen}
-                  onOpenChange={this.handleEndOpenChange}
                   style={{ minWidth: '100%' }}
                 />
               )

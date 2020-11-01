@@ -4,7 +4,7 @@ import { Card, Button } from 'antd';
 import DataTable from './DataTable';
 import SearchForm from './SearchForm';
 import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
-import {baseState, doClose} from "../../../utils/commonUtils";
+import {baseState, doAdd, doClose} from "../../../utils/commonUtils";
 import styles from '../TableList.less';
 import AddOrUpdateModal from './AddOrUpdateModal';
 
@@ -25,7 +25,7 @@ export default class List extends PureComponent {
               <SearchForm size="small" />
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => doClose(this.props, true, false)} size="small">添加</Button>
+              <Button icon="plus" type="primary" onClick={() => doAdd(this.props, true, false)} size="small">添加</Button>
             </div>
             <DataTable />
           </div>

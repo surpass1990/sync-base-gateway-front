@@ -23,7 +23,7 @@ export default class DataTable extends PureComponent {
     const { data, loading } = this.props;
     const columns = [
       {
-        title: '用户标识',
+        title: '登录ID',
         dataIndex: 'userName',
         key: 'userName',
       },
@@ -41,7 +41,13 @@ export default class DataTable extends PureComponent {
         title: '管理员',
         dataIndex: 'admin',
         key: 'admin',
-        render: val => val === '1' ? '是' : '否',
+        render: val => val === '0' ? '否' : '是',
+      },
+      {
+        title: '状态',
+        dataIndex: 'status',
+        key: 'status',
+        render: val => val === '0' ? '禁用' : '启用',
       },
       {
         title: '创建时间',

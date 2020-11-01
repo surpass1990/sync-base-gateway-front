@@ -57,36 +57,6 @@ export default {
         "yn": 1
       },
       {
-        "id": 159,
-        "systemCode": "gyl_guar_core",
-        "systemName": "担保系统核心服务",
-        "token": "e51d8b482a914989ab7c58048e7eda57",
-        "type": 1,
-        "msg": "担保系统核心服务",
-        "status": 1,
-        "flowStatus": 2,
-        "operateUser": "zhanghao63",
-        "createdDate": "2020-03-25T18:48:03",
-        "modifiedDate": "2020-03-25T18:48:03",
-        "version": 1,
-        "yn": 1
-      },
-      {
-        "id": 158,
-        "systemCode": "gyl_guar_app",
-        "systemName": "担保系统App服务",
-        "token": "bf9617460544475cadda203abb3abe62",
-        "type": 2,
-        "msg": "担保系统App服务",
-        "status": 1,
-        "flowStatus": 2,
-        "operateUser": "zhanghao63",
-        "createdDate": "2020-03-25T18:47:34",
-        "modifiedDate": "2020-03-25T18:47:34",
-        "version": 1,
-        "yn": 1
-      },
-      {
         "id": 157,
         "systemCode": "DDTest0120",
         "systemName": "东东001",
