@@ -4,9 +4,9 @@ import { Modal, Form, Input, Select, DatePicker } from 'antd';
 import moment from 'moment';
 import FormItem from 'antd/es/form/FormItem';
 import emitter from "../../../utils/events";
-import { baseState, doClose } from '../../../utils/commonUtils';
+import { addExtread, baseState, doClose } from '../../../utils/commonUtils';
 
-@connect(({ middleModel: { preUpdate, visible, isUpdate } }) => ({ preUpdate, visible, isUpdate }))
+@connect(({ middleModel: { preUpdate, visible, isUpdate, extread } }) => ({ preUpdate, visible, isUpdate, extread }))
 @Form.create()
 export default class AddOrUpdateModal extends PureComponent {
 
@@ -39,10 +39,14 @@ export default class AddOrUpdateModal extends PureComponent {
     });
   };
 
+  chgType = (val) => {
+    addExtread(this.props, {type: val});
+  }
+
   
 
   render() {
-    const { form: { getFieldDecorator }, visible, isUpdate, preUpdate } = this.props;
+    const { form: { getFieldDecorator }, visible, isUpdate, preUpdate, extread } = this.props;
     const { Option } = Select;
     const formItemLayout = {
       labelCol: { span: 7 },
@@ -55,6 +59,12 @@ export default class AddOrUpdateModal extends PureComponent {
       record = Object.assign(record, preUpdate);
     }
 
+    let t = "1"
+    if(extread && extread.type){
+      t = extread.type;
+    }
+
+    console.log("===========", t);
 
     return (
       <Modal
@@ -76,7 +86,7 @@ export default class AddOrUpdateModal extends PureComponent {
             {getFieldDecorator('type', {
               initialValue: String(record.type),
             })(
-              <Select placeholder="请选择数据源类型" >
+              <Select placeholder="请选择数据源类型" onChange={this.chgType}>
                 <Option value="1">实时数据(测点标识)</Option>
                 <Option value="2">实时数据(测点名称)</Option>
                 <Option value="3">历史数据(测点名称)</Option>
@@ -88,14 +98,14 @@ export default class AddOrUpdateModal extends PureComponent {
             )}
           </FormItem>
 
-          <FormItem {...formItemLayout} label="测点标识">
+          <FormItem {...formItemLayout} label="测点标识" hidden={String(t) !== "1"}>
             {
               getFieldDecorator('tagIds', {
                 initialValue: record.tagIds,
               })(<Input placeholder="请输入测点标识, 格式例如:0-10,2, 仅【实时数据(测点标识)】时才有效" />)}
           </FormItem>
 
-          <FormItem {...formItemLayout} label="测点名称">
+          <FormItem {...formItemLayout} label="测点名称" >
             {
               getFieldDecorator('tagName', {
                 initialValue: record.tagName,
@@ -116,7 +126,7 @@ export default class AddOrUpdateModal extends PureComponent {
                 initialValue: record.gapTime,
               })(<Input placeholder="请输入周期时间, 以D或H或M结尾, 不区分大小写" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="时间范围">
+          <FormItem {...formItemLayout} label="开始时间">
             {
               getFieldDecorator('beginTime', {
                 initialValue: record.beginTime ? moment(record.beginTime) : null,
@@ -131,7 +141,7 @@ export default class AddOrUpdateModal extends PureComponent {
             }
           </FormItem>
 
-          <FormItem {...formItemLayout} label="时间范围">
+          <FormItem {...formItemLayout} label="结束时间"  hidden={String(t) === "5" || String(t) === "6" || String(t) == "7"}>
             {
               getFieldDecorator('endTime', {
                 initialValue: record.endTime ? moment(record.endTime) : null,

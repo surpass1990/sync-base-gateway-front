@@ -30,5 +30,12 @@ export default {
       const newState = { };
       return newState;
     },
+
+
+    addExtread(state, {payload}){
+      const newState = {...state};
+      newState.extread = payload;
+      return newState;
+    },
   },
 };

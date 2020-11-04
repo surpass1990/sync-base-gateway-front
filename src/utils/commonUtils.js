@@ -735,3 +735,13 @@ export function doAdd(props, flag, updateFlag=false){
     isUpdate: updateFlag,
   });
 }
+
+
+export function addExtread(props, params){
+  const { dispatch } = props;
+  dispatch({
+    type: "middleModel/addExtread",
+    payload: params,
+  });
+  
+}
