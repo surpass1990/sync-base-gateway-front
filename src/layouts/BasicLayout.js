@@ -201,7 +201,11 @@ class BasicLayout extends React.PureComponent {
     }
     // 更新密码
     if (key === 'chgPwd') {
-      const {currentUser} = this.props;
+      const {dispatch} = this.props;
+      dispatch({
+        type: 'user/openChgPwd',
+        payload: true,
+      });
     }
   };
 

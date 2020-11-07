@@ -53,9 +53,19 @@ export default class LoginPage extends Component {
           
           {login.status && String(login.status) !== '200' && 
               !submitting &&
-              this.renderMessage('用户名或是密码错误')}
-            <UserName name="userName" placeholder="请输入用户名" />
-            <Password name="password" placeholder="请输入密码" />
+              this.renderMessage(login.msg)}
+            <UserName name="userName" placeholder="请输入用户名" rules={[
+                {
+                  required: true,
+                  message: "请输入用户名称",
+                },
+              ]}/>
+            <Password name="password" placeholder="请输入密码" rules={[
+                {
+                  required: true,
+                  message: "请输入密码",
+                },
+              ]}/>
           {/* <Tab key="account" tab="账户密码登录">
             {login.status === 'error' &&
               login.type === 'account' &&

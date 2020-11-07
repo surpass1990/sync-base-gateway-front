@@ -16,6 +16,7 @@ export default class AddOrUpdateModal extends PureComponent {
       type: 1,
       step: 60,
       model: -1,
+      pageSize: 1000000
     },
 
     startValue: null,
@@ -46,6 +47,11 @@ export default class AddOrUpdateModal extends PureComponent {
   
 
   render() {
+    // 处理时间少了8小时问题
+    moment.fn.toISOString = function () {
+      return this.format('YYYY-MM-DD HH:mm:ss');
+    }
+
     const { form: { getFieldDecorator }, visible, isUpdate, preUpdate, extread } = this.props;
     const { Option } = Select;
     const formItemLayout = {
@@ -63,8 +69,6 @@ export default class AddOrUpdateModal extends PureComponent {
     if(extread && extread.type){
       t = extread.type;
     }
-
-    console.log("===========", t);
 
     return (
       <Modal
@@ -93,7 +97,7 @@ export default class AddOrUpdateModal extends PureComponent {
                 <Option value="4">宽表数据</Option>
                 <Option value="5">增量数据</Option>
                 <Option value="6">增量数据(tableau)</Option>
-                <Option value="7">增量数据(js)</Option>
+                {/* <Option value="7">增量数据(js)</Option> */}
               </Select>
             )}
           </FormItem>
@@ -169,6 +173,18 @@ export default class AddOrUpdateModal extends PureComponent {
                 <Option value="4">平均值</Option>
               </Select>
             )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="数据条数">
+            {
+              getFieldDecorator('pageSize', {
+                initialValue: record.pageSize,
+              })(<Input placeholder="数据条数" />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="描述信息">
+            {
+              getFieldDecorator('msg', {
+                initialValue: record.msg,
+              })(<Input placeholder="描述信息" />)}
           </FormItem>
 
         </Form>

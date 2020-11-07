@@ -64,7 +64,7 @@ export default class AddOrUpdateModal extends PureComponent {
     if(preUpdate) {
       record = Object.assign(record, preUpdate);
     }
- 
+
     return (
       <Modal
         title={isUpdate ? this.state.commons.updateTitle : this.state.commons.addTitle}
@@ -94,7 +94,7 @@ export default class AddOrUpdateModal extends PureComponent {
           </FormItem>
           <FormItem {...formItemLayout} label="管理员">
             {getFieldDecorator('admin', {
-              initialValue: String(record.admin),
+              initialValue: String(record.admin ? record.admin : 1),
               rules: [{ required: true, message: '请选择' }],
             })(
               <Select placeholder="请选择" >
@@ -105,7 +105,7 @@ export default class AddOrUpdateModal extends PureComponent {
           </FormItem>
           <FormItem {...formItemLayout} label="状态">
             {getFieldDecorator('status', {
-              initialValue: String(record.status),
+              initialValue: String(record.status ? record.status : 1),
               rules: [{ required: true, message: '请选择' }],
             })(
               <Select placeholder="请选择" >

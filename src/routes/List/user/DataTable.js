@@ -28,16 +28,6 @@ export default class DataTable extends PureComponent {
         key: 'userName',
       },
       {
-        title: '邮箱',
-        dataIndex: 'email',
-        key: 'email',
-      },
-      {
-        title: '联系方式',
-        dataIndex: 'tel',
-        key: 'tel',
-      },
-      {
         title: '管理员',
         dataIndex: 'admin',
         key: 'admin',
@@ -50,10 +40,20 @@ export default class DataTable extends PureComponent {
         render: val => val === '0' ? '禁用' : '启用',
       },
       {
+        title: '邮箱',
+        dataIndex: 'email',
+        key: 'email',
+      },
+      {
+        title: '联系方式',
+        dataIndex: 'tel',
+        key: 'tel',
+      },
+      {
         title: '创建时间',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        dataIndex: 'createDate',
+        key: 'createDate',
+        render: val => <span>{val ? moment(val).format('YYYY-MM-DD HH:mm:ss') : "-"}</span>,
       },
       {
         title: '操作',

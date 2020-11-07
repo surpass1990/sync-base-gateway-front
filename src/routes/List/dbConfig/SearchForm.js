@@ -75,7 +75,7 @@ export default class SearchForm extends PureComponent {
                   <Option value="4">宽表数据</Option>
                   <Option value="5">增量数据</Option>
                   <Option value="6">增量数据(tableau)</Option>
-                  <Option value="7">增量数据(js)</Option>
+                  {/* <Option value="7">增量数据(js)</Option> */}
                 </Select>
               )}
             </FormItem>
@@ -83,15 +83,16 @@ export default class SearchForm extends PureComponent {
         </Row>
         <Row gutter={{ md: 6, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="操作人">
-              {getFieldDecorator('userName')(<Input />)}
+            <FormItem label="创建人">
+              {getFieldDecorator('createUser')(<Input />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="创建人">
-              {getFieldDecorator('operateUser')(<Input />)}
+            <FormItem label="操作人">
+              {getFieldDecorator('updateUser')(<Input />)}
             </FormItem>
           </Col>
+        
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>

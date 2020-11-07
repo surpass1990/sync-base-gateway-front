@@ -169,37 +169,43 @@ export default class DataTable extends PureComponent {
         width: 200,
       },
       {
+        title: '数据条数',
+        dataIndex: 'pageSize',
+        key: 'pageSize',
+        width: 100,
+      },
+      {
         title: '描述',
         dataIndex: 'msg',
         key: 'msg',
-        render: val => this.parseModel(val),
         width: 200,
       },
       {
         title: '创建人',
-        dataIndex: 'userName',
-        key: 'userName',
-        width: 100,
-      },
-      {
-        title: '操作人',
-        dataIndex: 'operateUser',
-        key: 'operateUser',
+        dataIndex: 'createUser',
+        key: 'createUser',
         width: 100,
       },
       {
         title: '创建时间',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
+        dataIndex: 'createDate',
+        key: 'createDate',
         width: 150,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        render: val => <span>{val ? moment(val).format('YYYY-MM-DD HH:mm:ss') : "-"}</span>,
       },
+      {
+        title: '操作人',
+        dataIndex: 'updateUser',
+        key: 'updateUser',
+        width: 100,
+      },
+    
       {
         title: '更新时间',
         dataIndex: 'updateDate',
         key: 'updateDate',
         width: 150,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+        render: val => <span>{val ? moment(val).format('YYYY-MM-DD HH:mm:ss') : "-"}</span>,
       },
       {
         title: '操作',
@@ -235,7 +241,7 @@ export default class DataTable extends PureComponent {
           pagination={false}
           onChange={this.handleChange}
           size="small"
-          scroll={{ x: 2100 }}
+          scroll={{ x: 2200 }}
           // rowClassName={(record, index) => index % 2 === 0 ? red : blue}
         />
       </div>

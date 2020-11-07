@@ -1,4 +1,5 @@
-import { query as queryUsers, queryCurrent, logout } from '../services/user';
+import { message } from 'antd';
+import { query as queryUsers, queryCurrent, logout, chgPwd } from '../services/user';
 
 export default {
   namespace: 'user',
@@ -32,6 +33,18 @@ export default {
         payload: response,
       });
     },
+
+  
+    *chgPwd({ payload, callback }, { call, put }) {
+      const response = yield call(chgPwd, payload);
+      if (String(response.code) === '200') {
+        message.success("操作成功");
+        if (callback) callback();
+      }else {
+        message.error(response.message);
+      }
+    },
+    
   },
 
   reducers: {
@@ -62,5 +75,13 @@ export default {
         },
       };
     },
+
+    openChgPwd(state, {payload}) {
+      return {
+        ...state,
+        chgPwdStatus: payload,
+      };
+    },
+
   },
 };

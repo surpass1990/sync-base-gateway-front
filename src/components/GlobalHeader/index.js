@@ -3,6 +3,7 @@ import {Avatar, Divider, Dropdown, Icon, Menu, Spin} from 'antd';
 import Debounce from 'lodash-decorators/debounce';
 import {Link} from 'dva/router';
 import styles from './index.less';
+import ChgPwd from '../../routes/User/ChgPwd';
 
 export default class GlobalHeader extends PureComponent {
   componentWillUnmount() {
@@ -65,7 +66,11 @@ export default class GlobalHeader extends PureComponent {
             <Spin size="small" style={{ marginLeft: 8 }} />
           )}
         </div>
+        <div>
+          <ChgPwd />
+        </div>
       </div>
+      
     );
   }
 }
