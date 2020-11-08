@@ -16,9 +16,9 @@ export default class AddOrUpdateModal extends PureComponent {
       type: 1,
       step: 60,
       model: -1,
-      pageSize: 1000000
+      pageSize: 1000000,
+      refreshDays: 10,
     },
-
     startValue: null,
     endValue: null,
     endOpen: false,
@@ -179,6 +179,12 @@ export default class AddOrUpdateModal extends PureComponent {
               getFieldDecorator('pageSize', {
                 initialValue: record.pageSize,
               })(<Input placeholder="数据条数" />)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="刷新天数" hidden={String(t) !== "6" && String(t) !== "7"}>
+            {
+              getFieldDecorator('refreshDays', {
+                initialValue: record.refreshDays,
+              })(<Input placeholder="刷新天数" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="描述信息">
             {
