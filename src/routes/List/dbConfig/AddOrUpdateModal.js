@@ -17,7 +17,7 @@ export default class AddOrUpdateModal extends PureComponent {
       step: 60,
       model: -1,
       pageSize: 1000000,
-      refreshDays: 10,
+      refreshDays: 5,
     },
     startValue: null,
     endValue: null,
