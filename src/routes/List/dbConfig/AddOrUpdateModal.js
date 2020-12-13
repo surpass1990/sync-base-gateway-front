@@ -14,7 +14,7 @@ export default class AddOrUpdateModal extends PureComponent {
     ...baseState("dbConfig", "WDC配置"),
     initData: {
       type: 1,
-      step: 60,
+      timeStep: 60,
       model: -1,
       pageSize: 1000000,
       refreshDays: 5,
@@ -25,7 +25,7 @@ export default class AddOrUpdateModal extends PureComponent {
   };
 
   addBtn = () => {
-    const { form: { validateFieldsAndScroll }, dispatch } = this.props;
+    const { form: { validateFieldsAndScroll, resetFields }, dispatch } = this.props;
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         dispatch({
@@ -33,6 +33,7 @@ export default class AddOrUpdateModal extends PureComponent {
           payload: values,
           callback: () => {
             doClose(this.props, false, false);
+            resetFields();
             emitter.emit(this.state.commons.emitName);
           },
         });
@@ -65,10 +66,15 @@ export default class AddOrUpdateModal extends PureComponent {
       record = Object.assign(record, preUpdate);
     }
 
-    let t = "1"
+    let t = "1";
+    if(preUpdate && preUpdate.type){
+      t = preUpdate.type;
+    }
     if(extread && extread.type){
       t = extread.type;
     }
+
+    console.log(record);
 
     return (
       <Modal
@@ -118,8 +124,8 @@ export default class AddOrUpdateModal extends PureComponent {
 
           <FormItem {...formItemLayout} label="时间间隔">
             {
-              getFieldDecorator('step', {
-                initialValue: record.step,
+              getFieldDecorator('timeStep', {
+                initialValue: record.timeStep,
                 rules: [{ required: true, message: '时间间隔' }],
               })(<Input placeholder="请输入时间间隔" />)}
           </FormItem>
@@ -174,12 +180,12 @@ export default class AddOrUpdateModal extends PureComponent {
               </Select>
             )}
           </FormItem>
-          <FormItem {...formItemLayout} label="数据条数">
+          {/* <FormItem {...formItemLayout} label="数据条数">
             {
               getFieldDecorator('pageSize', {
                 initialValue: record.pageSize,
               })(<Input placeholder="数据条数" />)}
-          </FormItem>
+          </FormItem> */}
           <FormItem {...formItemLayout} label="刷新天数" hidden={String(t) !== "6" && String(t) !== "7"}>
             {
               getFieldDecorator('refreshDays', {
