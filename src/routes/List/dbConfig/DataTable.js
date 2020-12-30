@@ -49,6 +49,9 @@ export default class DataTable extends PureComponent {
     if(type === '4'){
       return "宽表数据";
     }
+    if(type === '8'){
+      return "宽表数据(tableau)";
+    }
     if(type === '5'){
       return "增量数据";
     }

@@ -95,6 +95,7 @@ export default class AddOrUpdateModal extends PureComponent {
                 <Option value="2">实时数据(测点名称)</Option>
                 <Option value="3">历史数据(测点名称)</Option>
                 <Option value="4">宽表数据</Option>
+                <Option value="8">宽表数据(tableau)</Option>
                 <Option value="5">增量数据</Option>
                 <Option value="6">增量数据(tableau)</Option>
                 {/* <Option value="7">增量数据(js)</Option> */}
@@ -180,7 +181,7 @@ export default class AddOrUpdateModal extends PureComponent {
                 initialValue: record.pageSize,
               })(<Input placeholder="数据条数" />)}
           </FormItem>
-          <FormItem {...formItemLayout} label="刷新天数" hidden={String(t) !== "6" && String(t) !== "7"}>
+          <FormItem {...formItemLayout} label="刷新天数" hidden={String(t) !== "6" && String(t) !== "7" && String(t) !== "8"}>
             {
               getFieldDecorator('refreshDays', {
                 initialValue: record.refreshDays,
