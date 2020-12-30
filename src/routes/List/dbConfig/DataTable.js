@@ -153,15 +153,15 @@ export default class DataTable extends PureComponent {
         width: 150,
       },
       {
-        title: '间隔(秒)',
+        title: '周期时间(秒)',
         dataIndex: 'gapTime',
         key: 'gapTime',
         width: 100,
       },
       {
-        title: '步长(秒)',
-        dataIndex: 'step',
-        key: 'step',
+        title: '时间间隔(秒)',
+        dataIndex: 'timeStep',
+        key: 'timeStep',
         width: 100,
       },
       {
